@@ -1,0 +1,352 @@
+<!doctype html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Main</title>
+
+  <style>
+    html,
+    body {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      font-family: system-ui, -apple-system, "Segoe UI", Arial;
+    }
+
+    body {
+      background: radial-gradient(1200px 600px at 20% 10%, #1e293b 0%, #020617 60%);
+      color: #e5e7eb;
+    }
+
+    /* 外层居中容器 */
+    .wrap {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* 主卡片 */
+    .card {
+      width: 100%;
+      max-width: 820px;
+      height: 100%;
+      max-height: 520px;
+      background: rgba(15, 23, 42, 0.85);
+      border: 1px solid #1e293b;
+      border-radius: 24px;
+      padding: 32px;
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      align-self: center;
+    }
+
+    /* 头部 */
+    .header {
+      margin-bottom: 28px;
+    }
+
+    .title {
+      font-size: 26px;
+      font-weight: 800;
+      letter-spacing: 1px;
+    }
+
+    .subtitle {
+      margin-top: 6px;
+      font-size: 14px;
+      color: #94a3b8;
+    }
+
+    /* 按钮网格 */
+    .grid {
+      flex: 1;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(240px, 1fr));
+      gap: 32px;
+
+      /* ✅ 关键：限制宽度，避免挤在一起 */
+      max-width: 620px;
+
+      /* 左对齐但不贴边 */
+      margin: 12px auto 0;
+    }
+
+    /* 按钮样式 */
+    .btn {
+      border: none;
+      border-radius: 18px;
+      background: linear-gradient(135deg, #1f2937, #0f172a);
+      color: #e5e7eb;
+      font-size: 17px;
+      font-weight: 700;
+      cursor: pointer;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+      transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+      min-height: 140px;
+      /* ✅ 关键 */
+    }
+
+    .btn:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.45);
+      background: linear-gradient(135deg, #334155, #111827);
+    }
+
+    .btn:disabled {
+      opacity: 0.35;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+
+    .btn {
+      border: none;
+      border-radius: 18px;
+      background: linear-gradient(135deg, #1f2937, #0f172a);
+      color: #e5e7eb;
+      font-size: 17px;
+      font-weight: 800;
+      cursor: pointer;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+      transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+    }
+
+    .btn:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.45);
+      background: linear-gradient(135deg, #334155, #111827);
+    }
+
+    .btn:disabled {
+      opacity: 0.35;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+
+    /* ✅ 新增：按钮内容布局 */
+    .btnInner {
+      width: 100%;
+      padding: 22px 22px;
+      /* 原来 18 → 22 */
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .iconWrap {
+      width: 44px;
+      height: 44px;
+      border-radius: 14px;
+      background: rgba(148, 163, 184, 0.12);
+      border: 1px solid rgba(148, 163, 184, 0.18);
+      display: grid;
+      place-items: center;
+      flex: 0 0 auto;
+    }
+
+    .btnText {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 4px;
+    }
+
+    .btnTitle {
+      font-size: 16px;
+      font-weight: 800;
+      line-height: 1.1;
+    }
+
+    .btnDesc {
+      font-size: 12px;
+      color: #94a3b8;
+      font-weight: 600;
+    }
+
+    .meta {
+      margin-top: 14px;
+      padding: 14px 16px;
+      border: 1px solid #1e293b;
+      border-radius: 16px;
+      background: rgba(2, 6, 23, 0.35);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px 16px;
+    }
+
+    .metaItem {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .metaLabel {
+      font-size: 12px;
+      color: #94a3b8;
+      min-width: 54px;
+    }
+
+    .metaValue {
+      font-size: 14px;
+      font-weight: 700;
+      color: #e5e7eb;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="wrap">
+    <div class="card">
+
+      <div class="header">
+        <div class="title">MATLAB 期末大作业</div>
+        <div class="subtitle">多子系统综合应用演示平台</div>
+        <div class="meta">
+          <div class="metaItem">
+            <div class="metaLabel">姓名</div>
+            <div class="metaValue">刘逸宸</div>
+          </div>
+          <div class="metaItem">
+            <div class="metaLabel">学号</div>
+            <div class="metaValue">1231003009</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid">
+          <!-- 绘图 -->
+          <button class="btn" id="btnPlot" onclick="openChild('plot')">
+            <div class="btnInner">
+              <div class="iconWrap" aria-hidden="true">
+                <!-- SVG: Chart -->
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+                  <path d="M4 19V5" stroke="#E5E7EB" stroke-width="2" stroke-linecap="round" />
+                  <path d="M4 19H20" stroke="#E5E7EB" stroke-width="2" stroke-linecap="round" />
+                  <path d="M7 15L11 11L14 14L20 8" stroke="#E5E7EB" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round" />
+                </svg>
+              </div>
+              <div class="btnText">
+                <div class="btnTitle">绘图子系统</div>
+                <div class="btnDesc">函数绘制与样式设置</div>
+              </div>
+            </div>
+          </button>
+
+          <!-- 成绩 -->
+          <button class="btn" id="btnGrade" onclick="openChild('grade')">
+            <div class="btnInner">
+              <div class="iconWrap" aria-hidden="true">
+                <!-- SVG: Table -->
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+                  <rect x="4" y="5" width="16" height="14" rx="2" stroke="#E5E7EB" stroke-width="2" />
+                  <path d="M4 10H20" stroke="#E5E7EB" stroke-width="2" stroke-linecap="round" />
+                  <path d="M9 5V19" stroke="#E5E7EB" stroke-width="2" stroke-linecap="round" />
+                  <path d="M15 5V19" stroke="#E5E7EB" stroke-width="2" stroke-linecap="round" />
+                </svg>
+              </div>
+              <div class="btnText">
+                <div class="btnTitle">成绩查询子系统</div>
+                <div class="btnDesc">筛选、统计与图表导出</div>
+              </div>
+            </div>
+          </button>
+
+          <!-- 蹦极 -->
+          <button class="btn" id="btnBungee" onclick="openChild('bungee')">
+            <div class="btnInner">
+              <div class="iconWrap" aria-hidden="true">
+                <!-- SVG: Motion / Wave -->
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+                  <path d="M3 12C5.5 6 8.5 18 11 12C13.5 6 16.5 18 19 12" stroke="#E5E7EB" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round" />
+                  <path d="M21 12H22" stroke="#E5E7EB" stroke-width="2" stroke-linecap="round" />
+                </svg>
+              </div>
+              <div class="btnText">
+                <div class="btnTitle">蹦极仿真子系统</div>
+                <div class="btnDesc">Simulink 动力学仿真</div>
+              </div>
+            </div>
+          </button>
+
+          <!-- 彩票 -->
+          <button class="btn" id="btnCustom" onclick="openChild('custom')">
+            <div class="btnInner">
+              <div class="iconWrap" aria-hidden="true">
+                <!-- SVG: Ticket -->
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+                  <path d="M6 7H18" stroke="#E5E7EB" stroke-width="2" stroke-linecap="round" />
+                  <path d="M7 9H17V19H7V9Z" stroke="#E5E7EB" stroke-width="2" stroke-linejoin="round" />
+                  <path d="M9 12H15" stroke="#E5E7EB" stroke-width="2" stroke-linecap="round" />
+                  <path d="M9 15H13" stroke="#E5E7EB" stroke-width="2" stroke-linecap="round" />
+                </svg>
+              </div>
+              <div class="btnText">
+                <div class="btnTitle">彩票子系统</div>
+                <div class="btnDesc">自动选号与结果导出</div>
+              </div>
+            </div>
+          </button>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    let htmlComponent = null;
+
+    function setup(hc) {
+      htmlComponent = hc;
+
+      htmlComponent.addEventListener("DataChanged", function () {
+        const d = htmlComponent.Data || {};
+
+        if (d.action === "setState") {
+          const s = d.payload || {};
+          btnPlot.disabled = !!s.plotOpen;
+          btnGrade.disabled = !!s.gradeOpen;
+          btnBungee.disabled = !!s.bungeeOpen;
+          btnCustom.disabled = !!s.customOpen;
+        }
+
+        // toast 逻辑保留，但不再显示任何状态
+      });
+    }
+
+    function emit(action, payload) {
+      if (!htmlComponent) return;
+
+      const msg = { action: action, payload: payload || {} };
+
+      htmlComponent.Data = msg;
+      htmlComponent.sendEventToMATLAB("ui", msg);
+    }
+
+    function openChild(which) {
+      emit("openChild", { which });
+    }
+  </script>
+
+</body>
+
+</html>
